@@ -28,10 +28,7 @@ version_check:
 clean:
 	rm -f *~
 
-.PHONY: install clean
+test:
+	( cd test && ./unit_tests.sh )
 
-# File version information:
-# $Id: AUTHORS 1103 2009-12-07 07:49:19Z corti $
-# $Revision: 1103 $
-# $HeadURL: https://svn.id.ethz.ch/nagios_plugins/check_updates/AUTHORS $
-# $Date: 2009-12-07 08:49:19 +0100 (Mon, 07 Dec 2009) $
+.PHONY: install clean test
