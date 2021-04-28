@@ -29,9 +29,9 @@ clean:
 	rm -f *~
 
 rpm: dist
-        mkdir -p rpmroot/SOURCES rpmroot/BUILD
-        cp $(DIST_DIR).tar.gz rpmroot/SOURCES
-        rpmbuild --define "_topdir `pwd`/rpmroot" -ba check_nagios_latency.spec
+	mkdir -p rpmroot/SOURCES rpmroot/BUILD
+	cp $(DIST_DIR).tar.gz rpmroot/SOURCES
+	rpmbuild --define "_topdir `pwd`/rpmroot" -ba check_nagios_latency.spec
 
 test: dist
 	( export SHUNIT2="$$(pwd)/shunit2/shunit2" && cd test && ./unit_tests.sh )
