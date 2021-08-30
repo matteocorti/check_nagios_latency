@@ -33,7 +33,15 @@ rpm: dist
 	cp $(DIST_DIR).tar.gz rpmroot/SOURCES
 	rpmbuild --define "_topdir `pwd`/rpmroot" -ba check_nagios_latency.spec
 
+SHUNIT := $(shell command -v shunit2 2> /dev/null || if [ -x /usr/share/shunit2/shunit2 ] ; then echo /usr/share/shunit2/shunit2 ; fi )
+
 test: dist
-	( export SHUNIT2="$$(pwd)/shunit2/shunit2" && cd test && ./unit_tests.sh )
+ifndef SHUNIT
+        echo "No shUnit2 installed: see README.md"
+        exit 1
+else
+	echo "Performing unit tests"
+        ( export SHUNIT2=$(SHUNIT) && export LC_ALL=C && cd test && ./unit_tests.sh )
+endif
 
 .PHONY: install clean test
