@@ -1,3 +1,0 @@
-[submodule "shell-ci-build"]
-	path = shell-ci-build
-	url = https://github.com/caarlos0/shell-ci-build.git
