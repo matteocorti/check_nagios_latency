@@ -27,10 +27,10 @@ SHORTNAME="LATENCY"
 #   $1 error message (optional)
 usage() {
 
-    if [ -n "$1" ] ; then
+    if [ -n "$1" ]; then
         echo "Error: $1" 1>&2
     fi
-    
+
     echo
     echo "Usage: check_nagios_latency [-hvV?] -w warning -c critical [-n path ] [-f cfg_file ]"
     echo
@@ -55,16 +55,16 @@ usage() {
 #   $1 program name
 check_prog() {
 
-    if [ -z "$PROG" ] ; then
+    if [ -z "$PROG" ]; then
         PROG=$(command -v "$1")
     fi
 
-    if [ -z "$PROG" ] ; then
+    if [ -z "$PROG" ]; then
         echo "${SHORTNAME} CRITICAL - cannot find $1"
         exit 2
     fi
 
-    if [ ! -x "$PROG" ] ; then
+    if [ ! -x "$PROG" ]; then
         echo "${SHORTNAME} CRICTICAL - $PROG is not executable"
         exit 2
     fi
@@ -76,7 +76,7 @@ main() {
     ################################################################################
     # Main
     ################################################################################
-    
+
     # initialize local variable (ovverride external definitions)
     CRITICAL=
     PROG=
@@ -85,15 +85,21 @@ main() {
 
     # process command line options
     while getopts "vh?Vc:w:n:f:" opt; do
-	case $opt in
-            c )      CRITICAL=$OPTARG;  ;;
-            f )      CFG=$OPTARG;    ;;
-            h | \? ) usage ; exit 3;    ;;
-            n )      PROG=$OPTARG ;;
-            V )      echo "check_nagios_latency version ${VERSION}"; exit 3; ;;
-            v )      VERBOSE=1;         ;;
-            w )      WARNING=$OPTARG;   ;;
-	esac
+        case $opt in
+        c) CRITICAL=$OPTARG ;;
+        f) CFG=$OPTARG ;;
+        h | \?)
+            usage
+            exit 3
+            ;;
+        n) PROG=$OPTARG ;;
+        V)
+            echo "check_nagios_latency version ${VERSION}"
+            exit 3
+            ;;
+        v) VERBOSE=1 ;;
+        w) WARNING=$OPTARG ;;
+        esac
     done
     shift $((OPTIND - 1))
 
@@ -102,24 +108,24 @@ main() {
 
     ###############
     # Check options
-    if [ -z "${CRITICAL}" ] ; then
-	usage "No critical threshold specified"
+    if [ -z "${CRITICAL}" ]; then
+        usage "No critical threshold specified"
     fi
-    if [ -z "${WARNING}" ] ; then
-	usage "No warning threshold specified"
+    if [ -z "${WARNING}" ]; then
+        usage "No warning threshold specified"
     fi
 
     ######################
     # Check number formats
 
-    if ! echo "$WARNING" | grep -qE '^[0-9]+(\.[0-9]+)?$' ; then
-	echo "${SHORTNAME} UNKOWN - Wrong number: $WARNING"
-	exit 3
+    if ! echo "$WARNING" | grep -qE '^[0-9]+(\.[0-9]+)?$'; then
+        echo "${SHORTNAME} UNKOWN - Wrong number: $WARNING"
+        exit 3
     fi
 
-    if ! echo "$CRITICAL" | grep -qE '^[0-9]+(\.[0-9]+)?$' ; then
-	echo "${SHORTNAME} UNKOWN - Wrong number: $WARNING"
-	exit 3
+    if ! echo "$CRITICAL" | grep -qE '^[0-9]+(\.[0-9]+)?$'; then
+        echo "${SHORTNAME} UNKOWN - Wrong number: $WARNING"
+        exit 3
     fi
 
     #######################
@@ -131,9 +137,9 @@ main() {
 
     # Check the latency
 
-    LATENCY=$($PROG | grep "Active Service Latency" |cut -f3 -d'/' | awk '{print $1}' | tr -d '\n');
+    LATENCY=$($PROG | grep "Active Service Latency" | cut -f3 -d'/' | awk '{print $1}' | tr -d '\n')
 
-    if [ -n "${VERBOSE}" ] ; then echo "latency: ${LATENCY}"; fi
+    if [ -n "${VERBOSE}" ]; then echo "latency: ${LATENCY}"; fi
 
     ####################
     # Perform the checks
@@ -141,20 +147,20 @@ main() {
     PERF="Latency=${LATENCY};${WARNING};${CRITICAL};;"
 
     COMPARISON=$(echo "if($LATENCY>$CRITICAL) 1 else 0;" | bc)
-    if [ "$COMPARISON" -eq 1 ] ; then
-	echo "${SHORTNAME} CRITICAL ${LATENCY}s | $PERF"
-	exit 2
+    if [ "$COMPARISON" -eq 1 ]; then
+        echo "${SHORTNAME} CRITICAL ${LATENCY}s | $PERF"
+        exit 2
     fi
 
     COMPARISON=$(echo "if($LATENCY>$WARNING) 1 else 0;" | bc)
-    if [ "$COMPARISON" -eq 1 ] ; then
-	echo "${SHORTNAME} WARNING ${LATENCY}s | $PERF"
-	exit 1
+    if [ "$COMPARISON" -eq 1 ]; then
+        echo "${SHORTNAME} WARNING ${LATENCY}s | $PERF"
+        exit 1
     fi
 
     echo "${SHORTNAME} OK ${LATENCY}s| $PERF"
-    
-    exit 0;
+
+    exit 0
 
 }
 

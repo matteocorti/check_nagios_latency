@@ -2,6 +2,7 @@ PLUGIN=check_nagios_latency
 VERSION=`cat VERSION`
 DIST_DIR=$(PLUGIN)-$(VERSION)
 DIST_FILES=AUTHORS COPYING COPYRIGHT ChangeLog INSTALL Makefile NEWS README TODO VERSION $(PLUGIN) $(PLUGIN).spec $(PLUGIN).1 NAME
+SCRIPTS=$(PLUGIN) prepare_rpm.sh
 
 dist: version_check
 	rm -rf $(DIST_DIR) $(DIST_DIR).tar.gz
@@ -24,6 +25,18 @@ version_check:
 	grep -q "\"$(VERSION)\"" $(PLUGIN).1
 	grep -q "$(VERSION)" NEWS
 	echo "Version check: OK"
+
+SHFMT= := $(shell command -v shfmt 2> /dev/null)
+format:
+ifndef SHFMT
+	echo "No shfmt installed"
+else
+# -p POSIX
+# -w write to file
+# -s simplify
+# -i 4 indent with 4 spaces
+	shfmt -p -w -s -i 4 $(SCRIPTS)
+endif
 
 clean:
 	rm -f *~
