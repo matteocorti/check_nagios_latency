@@ -51,7 +51,7 @@ SHUNIT := $(shell command -v shunit2 2> /dev/null || if [ -x /usr/share/shunit2/
 test: dist
 ifndef SHUNIT
         echo "No shUnit2 installed: see README.md"
-        exit 1
+	exit 1
 else
 	echo "Performing unit tests"
 	( export SHUNIT2=$(SHUNIT) && export LC_ALL=C && cd test && ./unit_tests.sh )
