@@ -54,7 +54,7 @@ ifndef SHUNIT
         exit 1
 else
 	echo "Performing unit tests"
-        ( export SHUNIT2=$(SHUNIT) && export LC_ALL=C && cd test && ./unit_tests.sh )
+	( export SHUNIT2=$(SHUNIT) && export LC_ALL=C && cd test && ./unit_tests.sh )
 endif
 
 .PHONY: install clean test
