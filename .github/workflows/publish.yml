@@ -14,12 +14,15 @@ jobs:
       matrix:
         distro:
           - 'centos:7'
-          - 'centos:8'
           - 'fedora:32'
           - 'fedora:33'
           - 'fedora:34'
           - 'fedora:35'
+          - 'fedora:36'
         include:
+          - distro: 'fedora:36'
+            pre: >-
+              dnf install -y nmap ShellCheck curl sudo perl make bzip2 file openssl hostname rpm-build openssh-clients
           - distro: 'fedora:35'
             pre: >-
               dnf install -y nmap ShellCheck curl sudo perl make bzip2 file openssl hostname rpm-build openssh-clients
@@ -38,10 +41,6 @@ jobs:
           - distro: 'centos:7'
             pre: >-
               yum install -y nmap curl sudo perl make bzip2 file openssl perl-ExtUtils-MakeMaker perl-Test-Simple rpm-build openssh-clients &&
-              scversion="stable"; curl -Ls "https://github.com/koalaman/shellcheck/releases/download/${scversion?}/shellcheck-${scversion?}.linux.x86_64.tar.xz" | tar -xJv && cp "shellcheck-${scversion}/shellcheck" /usr/bin/
-          - distro: 'centos:8'
-            pre: >-
-              dnf install -y nmap curl sudo perl make bzip2 file openssl rpm-build openssh-clients &&
               scversion="stable"; curl -Ls "https://github.com/koalaman/shellcheck/releases/download/${scversion?}/shellcheck-${scversion?}.linux.x86_64.tar.xz" | tar -xJv && cp "shellcheck-${scversion}/shellcheck" /usr/bin/
     steps:
       - name: Git clone repository
