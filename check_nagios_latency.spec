@@ -1,4 +1,4 @@
-%define version 1.0.1
+%define version 1.0.2
 %define release 0
 %define sourcename       check_nagios_latency
 %define packagename      nagios-plugins-check_nagios_latency
@@ -42,6 +42,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/%{sourcename}.1*
 
 %changelog
+* Thu May 12 2022 Matteo Corti <matteo.corti@id.ethz.ch> - 1.0.2-0
+- updated to 1.0.2
+
 * Wed Dec 29 2010 Matteo Corti <matteo.corti@id.ethz.ch> - 1.0.1-0
 - updated to 1.0.1
 
