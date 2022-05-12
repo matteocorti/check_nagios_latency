@@ -5,7 +5,7 @@
 # Checks the Nagios latency
 #
 # Copyright (c) 2007-2010 ETH Zurich.
-# Copyright (c) 2007-2016 Matteo Corti
+# Copyright (c) 2007-2022 Matteo Corti <matteo@corti.li>
 #
 # This module is free software; you can redistribute it and/or modify it
 # under the terms of GNU general public license (gpl) version 3.
@@ -26,7 +26,7 @@ SHORTNAME="LATENCY"
 # Params
 #   $1 error message (optional)
 usage() {
-
+ 
     if [ -n "$1" ]; then
         echo "Error: $1" 1>&2
     fi
