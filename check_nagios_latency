@@ -137,7 +137,7 @@ main() {
 
     # Check the latency
 
-    LATENCY=$($PROG | grep "Active Service Latency" | cut -f3 -d'/' | awk '{print $1}' | tr -d '\n')
+    LATENCY=$( $PROG --mrtg -d AVGACTSVCLAT )
 
     if [ -n "${VERBOSE}" ]; then echo "latency: ${LATENCY}"; fi
 
