@@ -20,4 +20,4 @@
 
 	* check_nagios_latency: Initial implementation
 	* check_nagios_latency: Fix in the verbose output
-	* check_nagios_latency: Fix in the nagiostats existance check
+	* check_nagios_latency: Fix in the nagiostats existence check
