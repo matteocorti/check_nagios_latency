@@ -9,7 +9,7 @@
 
 Summary:   Checks Nagios latency
 Name:      %{packagename}
-Obsoletes: check_nagios_latency
+Obsoletes: check_nagios_latency <= 100
 Version:   %{version}
 Release:   %{release}%{?dist}
 License:   GPLv3+
