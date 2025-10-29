@@ -14,13 +14,9 @@ jobs:
       matrix:
         distro:
           - 'centos:7'
-          - 'fedora:39'
-          - 'fedora:40'
+          - 'fedora:latest'
         include:
-          - distro: 'fedora:40'
-            pre: >-
-              dnf install -y nmap ShellCheck curl sudo perl make bzip2 file openssl hostname rpm-build openssh-clients
-          - distro: 'fedora:39'
+          - distro: 'fedora:latest'
             pre: >-
               dnf install -y nmap ShellCheck curl sudo perl make bzip2 file openssl hostname rpm-build openssh-clients
           - distro: 'centos:7'
